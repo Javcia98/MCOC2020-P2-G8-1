@@ -35,17 +35,20 @@ class Barra(object):
         """Devuelve la rigidez ke del elemento. Arreglo numpy de (4x4)
         ret: instancia de objeto tipo reticulado
         """
-
-
-
-        #Hola cabros
-
+        L = self.calcular_largo(ret)
+        A = self.calcular_area()
+        K = self.E*A/L
         
+        xi = ret.obtener_coordenada_nodal(self.ni)
+        xj = ret.obtener_coordenada_nodal(self.nj)
+        dij =(xi-xj)
+        cos = dij[0]/L
+        sen = dij[1]/L
+        T0 = np.array([[-cos], [-sen], [cos], [sen]])
+        
+        ke = (T0 @ T0.T) * K
 
-
-        #implementar
-
-        return 
+        return ke 
 
     def obtener_vector_de_cargas(self, ret):
         """Devuelve el vector de cargas nodales fe del elemento. Vector numpy de (4x1)
