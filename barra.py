@@ -54,18 +54,36 @@ class Barra(object):
         """Devuelve el vector de cargas nodales fe del elemento. Vector numpy de (4x1)
         ret: instancia de objeto tipo reticulado
         """
-
-        #Implementar
-
-        return 
+        W = self.calcular_peso(ret)
+        vec = np.array([0, -1, 0, -1])
+        fe = vec.T * W/2
+    
+        return fe
 
 
     def obtener_fuerza(self, ret):
         """Devuelve la fuerza se que debe resistir la barra. Un escalar tipo double. 
         ret: instancia de objeto tipo reticulado
         """
-
-        #Implementar
-
-
-        return 
+        L = self.calcular_largo(ret)
+        A = self.calcular_area()
+        K = self.E*A/L
+        
+        n1 = self.ni
+        n2 = self.nj
+        
+        di = ret.obtener_coordenada_nodal(self.ni)
+        dj = ret.obtener_coordenada_nodal(self.nj)
+        dij =(di-dj)
+        cos = dij[0]/L
+        sen = dij[1]/L
+        T0 = np.array([[-cos], [-sen], [cos], [sen]])
+        
+        Kreal = T0.T * K
+        
+       
+        ue =np.array([ret.u[2*n1], ret.u[2*n1 + 1], ret.u[2*n2], ret.u[2*n2 + 1]])
+        
+        se = Kreal@ue
+        np.float64(se)
+        return -se 
