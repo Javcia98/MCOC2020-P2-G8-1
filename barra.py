@@ -35,7 +35,14 @@ class Barra(object):
         """Devuelve la rigidez ke del elemento. Arreglo numpy de (4x4)
         ret: instancia de objeto tipo reticulado
         """
+
+
+
+        #Hola cabros
+
         
+
+
         #implementar
 
         return 
